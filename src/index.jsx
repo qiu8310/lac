@@ -78,29 +78,17 @@ function decode(color) {
 }
 
 
-
-export function log() {
-  let str = util.format.apply(util, arguments);
-
-  if (noColor) return console.log(str);
+export function slog(str) {
+  if (noColor) return str;
 
   let tokens = str.split('');
   let result = '', t, i, len = tokens.length;
-  let openTags = {}, tag, md;
+  let openTags = {}, tag, md, lastTokenIsTag, origIndex;
 
-  let tagMap = (tag) => {
-    md = MARKDOWN[tag];
-    if (openTags[tag]) {
-      openTags[tag] = false;
-      return md in MODIFIERS ? PREFIX + (20 + MODIFIERS[md]) + 'm' : RESET;
-    } else {
-      openTags[tag] = true;
-      return color('', md, false);
-    }
-  };
 
   for (i = 0; i < len; i++) {
     t = tokens[i];
+    origIndex = i;
 
     // 转义 markdown
     if (t === '\\') {
@@ -123,12 +111,45 @@ export function log() {
         tag = null;
       }
 
-      result += tag ? tagMap(tag) : t;
+      if (tag) {
+        md = MARKDOWN[tag];
+        if (openTags[tag]) {
+          openTags[tag] = false;
+          lastTokenIsTag = true;
+          result += md in MODIFIERS ? PREFIX + (20 + MODIFIERS[md]) + 'm' : RESET;
+        } else {
+          // open 一个 tag 必须是上一个是 tag 或者 上一个是一个空白字符
+          // ，。：；？ => \uFF0C\u3002\uFF1A\uFF1B\uFF1F
+          if (origIndex === 0 || /[\s,\.:;?\uFF0C\u3002\uFF1A\uFF1B\uFF1F]/.test(tokens[origIndex - 1]) || lastTokenIsTag) {
+            openTags[tag] = true;
+            lastTokenIsTag = true;
+            result += color('', md, false);
+          } else {
+            result += tag;
+            lastTokenIsTag = false;
+          }
+        }
+      } else {
+        result += t;
+        lastTokenIsTag = false;
+      }
     }
   }
 
-  return console.log(result + RESET);
+  return result + (Object.keys(openTags).some(tag => openTags[tag]) ? RESET : '');
 }
+
+export function log(str, ...args) {
+  args.unshift(slog(str));
+  console.log(util.format.apply(util, args));
+}
+
+export function logDeep() {
+  let str = util.format.apply(util, arguments);
+  console.log(slog(str));
+}
+
+export const logd = logDeep;
 
 export function color(str, colors, close = true) {
 

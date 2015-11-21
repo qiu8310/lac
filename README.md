@@ -11,10 +11,14 @@ npm install lac
 ## USAGE
 
 ```js
-import {log, color} from lac;
+import {color, log, slog, logDeep, logd} from lac;
 
 color('the string', '!red.-green'); // "!" => high intensity color; "-" => background color
-log('^this text will be render in cyan color^');  // "^...^" => cyan
+log('^%s cyan color^', 'some text');  // "^...^" => cyan, only parse first paramater's markdown tag
+logDeep('^%s color^', '**bold**'); // parse all paramaters markdown tag
+// logd is an alias of logDeep
+
+let cyanStr = slog('^str^');  // return colored string, not output;
 ```
 
 

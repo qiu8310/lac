@@ -1,4 +1,4 @@
-import {color, COLOR, log, MARKDOWN} from './src/index';
+import {color, COLOR, log, slog, logDeep, logd, MARKDOWN} from './src/index';
 
 
 console.log(color('red text', 'red'))
@@ -29,11 +29,15 @@ console.log(color('custom color', '-custom'), '\n');
 
 Object.keys(MARKDOWN).forEach(md => {
   let v = MARKDOWN[md];
-  log('%smd: \\%s => %s%s', md, md, v, md);
+  logd('%smd: \\%s => %s%s', md, md, v, md);
 });
 console.log();
 
 log('pre ^**bold and cyan**^ post')
 log('pre **^bold and cyan^** post')
-log('pre ^**bold and cyan^** post')
+log('pre ^**bold and cyan^** post\n')
+
+log('^%s color %s^', '**bold**', '#red#');
+logd('^%s color %s^', '**bold**', '#red#');
+logDeep('^%s color %s^', '**bold**', '#red#');
 
