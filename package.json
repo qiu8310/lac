@@ -1,8 +1,8 @@
 {
   "name": "lac",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "log and color",
-  "main": "src/index.js",
+  "main": "build/index.js",
   "scripts": {
     "build": "babel src -d build",
     "watch": "babel src -d build -w",
