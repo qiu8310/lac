@@ -1,0 +1,30 @@
+{
+  "name": "lac",
+  "version": "0.0.1",
+  "description": "log and color",
+  "main": "src/index.js",
+  "scripts": {
+    "build": "babel src -d build",
+    "watch": "babel src -d build -w",
+    "test": "mocha"
+  },
+  "files": [
+    "build/",
+    "README.md"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qiu8310/lac.git"
+  },
+  "keywords": [
+    "mora",
+    "hub",
+    "package"
+  ],
+  "author": "Mora",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/qiu8310/mora/issues"
+  },
+  "homepage": "https://github.com/qiu8310/mora#readme"
+}
