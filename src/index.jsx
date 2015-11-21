@@ -79,7 +79,6 @@ function decode(color) {
 
 
 export function slog(str) {
-  if (noColor) return str;
 
   let tokens = str.split('');
   let result = '', t, i, len = tokens.length;
