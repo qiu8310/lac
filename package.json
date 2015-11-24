@@ -1,6 +1,6 @@
 {
   "name": "lac",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "log and color",
   "main": "build/index.js",
   "scripts": {
@@ -25,5 +25,8 @@
   "bugs": {
     "url": "https://github.com/qiu8310/mora/issues"
   },
-  "homepage": "https://github.com/qiu8310/mora#readme"
+  "homepage": "https://github.com/qiu8310/mora#readme",
+  "dependencies": {
+    "supports-color": "^3.1.2"
+  }
 }

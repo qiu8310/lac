@@ -1,7 +1,8 @@
 import util from 'util';
+import supportsColor from 'supports-color';
 
+export {supportsColor};
 export const rAnsi = /[\u001b\u009b][[()#;?]*(?:[0-9]{1,4}(?:;[0-9]{0,4})*)?[0-9A-ORZcf-nqry=><]/g;
-export const noColor = process.argv.indexOf('--no-color') > 0 || !process.stdout.isTTY;
 export function stripAnsi(str) { return typeof str === 'string' ? str.replace(rAnsi, '') : str; }
 export function hasAnsi(str) { return rAnsi.test(str); }
 
@@ -152,7 +153,7 @@ export const logd = logDeep;
 
 export function color(str, colors, close = true) {
 
-  if (noColor) return str;
+  if (!supportsColor) return str;
 
   colors = colors.split('.').reduce((all, color) => {
     all += PREFIX + decode(color) + 'm';
