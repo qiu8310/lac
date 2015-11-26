@@ -42,7 +42,7 @@ export let COLOR = {
 const PREFIX = '\x1b[',
   RESET = PREFIX + '0m',
   MODIFIERS = {
-    bold: 1,      // 21
+    bold: 1,      // 22  // 21 isn't widely supported and 22 does the same thing
     faint: 2,     // 22
     italic: 3,    // 23
     underline: 4, // 24
@@ -89,7 +89,6 @@ export function slog(str) {
   for (i = 0; i < len; i++) {
     t = tokens[i];
     origIndex = i;
-
     // 转义 markdown
     if (t === '\\') {
       if (tokens[i + 2] && str.substr(i + 1, 2) in MARKDOWN) {
@@ -116,6 +115,13 @@ export function slog(str) {
         if (openTags[tag]) {
           openTags[tag] = false;
           lastTokenIsTag = true;
+
+          if (md in MODIFIERS) {
+            result += PREFIX + (20 + (MODIFIERS[md] === 1 ? 2 : MODIFIERS[md])) + 'm';
+          } else {
+            result += RESET;
+          }
+
           result += md in MODIFIERS ? PREFIX + (20 + MODIFIERS[md]) + 'm' : RESET;
         } else {
           // open 一个 tag 必须是上一个是 tag 或者 上一个是一个空白字符
