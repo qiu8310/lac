@@ -1,6 +1,5 @@
 import {color, COLOR, log, slog, logDeep, logd, MARKDOWN} from './src/index';
 
-
 console.log(color('red text', 'red'))
 console.log(color('bright red text', '!red'))
 console.log(color('red background', '-red'))
@@ -29,7 +28,7 @@ console.log(color('custom color', '-custom'), '\n');
 
 Object.keys(MARKDOWN).forEach(md => {
   let v = MARKDOWN[md];
-  logd('%smd: \\%s => %s%s', md, md, v, md);
+  logd('**md:** %s\\%s => %s%s', md, md, v, md);
 });
 console.log();
 

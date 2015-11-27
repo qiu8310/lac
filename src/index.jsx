@@ -10,7 +10,7 @@ export function hasAnsi(str) { return rAnsi.test(str); }
 // KEY 最长不能超过两位
 export let MARKDOWN = {
   '**': 'bold',
-  '*': 'gray',
+  '*': '%black',
   '`': 'red.-white',
   '__': 'underline',
   '_': 'italic',
@@ -67,9 +67,9 @@ function hexToRgb5(hex) {
 function decode(color) {
   let base = 30, bg, index;
   if (color.indexOf('-') >= 0) bg = true, base += 10;  // background color
-  if (color.indexOf('!') >= 0) base += 60;  // high intensity color
+  if (color.indexOf('%') >= 0) base += 60;  // high intensity color
 
-  color = color.replace(/[\!\-]/g, '').toLowerCase();
+  color = color.replace(/[\%\-]/g, '').toLowerCase();
   index = NAMES.indexOf(color);
   if (index >= 0) return base + index;
   if (color in MODIFIERS) return MODIFIERS[color];

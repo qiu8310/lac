@@ -1,6 +1,6 @@
 {
   "name": "lac",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "description": "log and color",
   "main": "build/index.js",
   "scripts": {
